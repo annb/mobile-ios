@@ -76,9 +76,10 @@
     
     self.imgvAttach.placeholderImage = [UIImage imageNamed:@"IconForPlaceholderImage.png"];
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    NSString *message = nil;
     
     NSDictionary *_templateParams = self.socialActivity.templateParams;
+    NSString *message = [NSString stringWithFormat:@"%@", [_templateParams valueForKey:@"MESSAGE"]];;
+
     switch (self.socialActivity.activityType) {
         case ACTIVITY_DOC:{
             NSString *imgPath = [_templateParams valueForKey:@"DOCLINK"];
@@ -91,7 +92,6 @@
             }
             _imgvAttach.imageURL = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@", [userDefault valueForKey:EXO_PREFERENCE_DOMAIN],  imgPath] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
-            message = [NSString stringWithFormat:@"%@", [_templateParams valueForKey:@"MESSAGE"]];
             self.lbMessage.text = message;
             
             _lbFileName.text = [_templateParams valueForKey:@"DOCNAME"];
@@ -110,15 +110,6 @@
             self.imgvAttach.imageURL = [NSURL URLWithString:[[NSString stringWithFormat:@"%@%@", [userDefault valueForKey:EXO_PREFERENCE_DOMAIN], [NSString stringWithFormat:@"/rest/thumbnailImage/large/%@", [_templateParams valueForKey:@"contenLink"]]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
              
             float plfVersion = [[[NSUserDefaults standardUserDefaults] valueForKey:EXO_PREFERENCE_VERSION_SERVER] floatValue];
-            NSString * message;
-            
-            if(plfVersion >= 4.0) { // in plf 4, no state in template params.
-                
-                message = [NSString stringWithFormat:@"%@ was created by %@", [_templateParams valueForKey:@"contentName"], [_templateParams valueForKey:@"author"]];
-                
-            } else {
-                message = [NSString stringWithFormat:@"%@ was created by %@ state: %@", [_templateParams valueForKey:@"contentName"], [_templateParams valueForKey:@"author"], [_templateParams valueForKey:@"state"]];
-            }
             
             _lbFileName.text = @"";
 

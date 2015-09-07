@@ -67,10 +67,10 @@
     
     _lbName.attributedText = attributedTitle;
    
-
+    NSString * message= [[[socialActivityStream.templateParams valueForKey:@"MESSAGE"] stringByConvertingHTMLToPlainText] stringByEncodeWithHTML];
+    
     switch (socialActivityStream.activityType) {
         case ACTIVITY_DOC:{
-            NSString * message  = [[[socialActivityStream.templateParams valueForKey:@"MESSAGE"] stringByConvertingHTMLToPlainText] stringByEncodeWithHTML];
 
             self.activityMessage.text = message?message:@"";
             
@@ -94,16 +94,7 @@
         }
             break;
         case ACTIVITY_CONTENTS_SPACE:{
-            
-            NSString * message;
-            
-            if(plfVersion >= 4.0) { // in plf 4, no state in template params.
-                
-                message = [NSString stringWithFormat:@"%@ was created by %@", [socialActivityStream.templateParams valueForKey:@"contentName"], [socialActivityStream.templateParams valueForKey:@"author"]];
-
-            } else {
-                message = [NSString stringWithFormat:@"%@ was created by %@ state: %@", [socialActivityStream.templateParams valueForKey:@"contentName"], [socialActivityStream.templateParams valueForKey:@"author"], [socialActivityStream.templateParams valueForKey:@"state"]];
-            }
+                        
             if (message){
                 NSMutableAttributedString * attributedMessage = [[NSMutableAttributedString alloc] initWithString:message];
                 if ([socialActivityStream.templateParams valueForKey:@"contentName"]){
