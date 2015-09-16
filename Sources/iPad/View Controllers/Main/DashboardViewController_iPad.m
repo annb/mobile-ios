@@ -72,6 +72,18 @@
 }
 
 
+#pragma mark - handle orientation
 
+-(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    float height;
+    if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])){
+        height = MAX([UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height);
+    } else {
+        height = MIN([UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height);
+    }
+    [self.view setFrame:CGRectMake(self.view.frame.origin.x, 0, self.view.frame.size.width, height)];
+    
+}
 
 @end
